@@ -1,0 +1,5 @@
+CREATE TABLE star (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    distance BIGINT NOT NULL
+);

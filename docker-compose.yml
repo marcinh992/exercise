@@ -1,0 +1,34 @@
+version: '3.8'
+name: starservice
+services:
+  star-db:
+    image: postgres:13
+    container_name: star_db
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: star
+    ports:
+      - "5432:5432"
+    volumes:
+      - star-db-data:/var/lib/postgresql/data
+
+  star-service:
+    container_name: star_service
+    build:
+      dockerfile: ./Dockerfile
+    restart: no
+    ports:
+      - "8080:8080"
+    depends_on:
+      - star-db
+    tty: true
+    environment:
+      STAR_DB_HOST: star-db
+      STAR_DB_NAME: star
+      STAR_DB_USERNAME: root
+      STAR_DB_PASSWORD: root
+
+volumes:
+  star-db-data:
